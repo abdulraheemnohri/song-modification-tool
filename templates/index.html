@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Song Modifier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Side Menu -->
+    <div class="side-menu">
+        <div class="menu-header">
+            <i class="fas fa-music menu-logo"></i>
+            <h3>Audio Tools</h3>
+        </div>
+        <nav class="menu-nav">
+            <div class="menu-group">
+                <div class="menu-label">Main</div>
+                <a href="#" class="menu-item" data-section="upload">
+                    <i class="fas fa-upload"></i> 
+                    <span>Upload</span>
+                </a>
+                <a href="#" class="menu-item" data-section="player">
+                    <i class="fas fa-play"></i>
+                    <span>Player</span>
+                </a>
+                <a href="#" class="menu-item" data-section="info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Audio Info</span>
+                </a>
+            </div>
+
+            <div class="menu-group">
+                <div class="menu-label">Tools</div>
+                <a href="#" class="menu-item" data-section="basic">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Basic Tools</span>
+                </a>
+                <a href="#" class="menu-item" data-section="effects">
+                    <i class="fas fa-magic"></i>
+                    <span>Effects</span>
+                </a>
+                <a href="#" class="menu-item" data-section="presets">
+                    <i class="fas fa-star"></i>
+                    <span>Presets</span>
+                </a>
+            </div>
+
+            <div class="menu-group">
+                <div class="menu-label">Advanced</div>
+                <a href="#" class="menu-item" data-section="ai">
+                    <i class="fas fa-brain"></i>
+                    <span>AI Tools</span>
+                </a>
+                <a href="#" class="menu-item" data-section="eq">
+                    <i class="fas fa-wave-square"></i>
+                    <span>Equalizer</span>
+                </a>
+                <a href="#" class="menu-item" data-section="mixer">
+                    <i class="fas fa-mixer"></i>
+                    <span>Mixer</span>
+                </a>
+            </div>
+        </nav>
+        <div class="menu-footer">
+            <button class="menu-toggle" onclick="toggleMenu()" title="Toggle Menu">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle d-md-none" onclick="toggleMobileMenu()" title="Toggle Mobile Menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Dark Mode Toggle -->
+        <div class="position-fixed top-0 end-0 m-3">
+            <div class="switch" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h1 class="text-center mb-5 custom-header">
+                <span class="custom-header-span">
+                    AI Song Modifier
+                </span>
+                🎵
+            </h1>
+
+            <!-- Sections Navigation -->
+            <div class="sections-nav mb-4">
+                <div class="nav-scroll">
+                    <button class="section-btn" data-section="upload">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                    <button class="section-btn" data-section="player">
+                        <i class="fas fa-play"></i> Player
+                    </button>
+                    <button class="section-btn" data-section="info">
+                        <i class="fas fa-info-circle"></i> Info
+                    </button>
+                    <button class="section-btn" data-section="basic">
+                        <i class="fas fa-sliders-h"></i> Basic
+                    </button>
+                    <button class="section-btn" data-section="effects">
+                        <i class="fas fa-magic"></i> Effects
+                    </button>
+                    <button class="section-btn" data-section="presets">
+                        <i class="fas fa-star"></i> Presets
+                    </button>
+                    <button class="section-btn" data-section="ai">
+                        <i class="fas fa-brain"></i> AI
+                    </button>
+                    <button class="section-btn" data-section="eq">
+                        <i class="fas fa-wave-square"></i> EQ
+                    </button>
+                    <button class="section-btn" data-section="mixer">
+                        <i class="fas fa-mixer"></i> Mixer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upload Section -->
+            <section id="upload" class="feature-section">
+                <div class="upload-container">
+                    <div class="upload-methods">
+                        <div class="upload-area">
+                            <div class="file-upload" id="dropZone">
+                                <label for="fileInput" class="visually-hidden">Upload Audio File</label>
+                                <input type="file" id="fileInput" accept="audio/*" class="hidden-input">
+                                <div class="upload-content">
+                                    <i class="fas fa-cloud-upload-alt fa-3x mb-3"></i>
+                                    <h4>Drop your audio file here</h4>
+                                    <p class="text-muted">or</p>
+                                    <button class="btn btn-secondary browse-btn" onclick="triggerFileInput()">
+                                        <i class="fas fa-folder-open me-2"></i>Browse Files
+                                    </button>
+                                    <div class="selected-file mt-3 d-none">
+                                        <p class="selected-filename mb-2"></p>
+                                        <button class="btn btn-primary upload-btn" onclick="uploadFile()">
+                                            <i class="fas fa-upload me-2"></i>Upload File
+                                        </button>
+                                    </div>
+                                    <div class="supported-formats mt-3">
+                                        Supported formats: MP3, WAV, OGG, M4A
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="upload-status d-none">
+                            <div class="progress-container">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                         role="progressbar" 
+                                         aria-label="Upload Progress"
+                                         aria-valuenow="0"
+                                         aria-valuemin="0"
+                                         aria-valuemax="100">
+                                    </div>
+                                </div>
+                                <div class="upload-text mt-2">
+                                    <span class="filename"></span>
+                                    <span class="progress-text">0%</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-danger cancel-upload mt-3" onclick="cancelUpload()">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-files mt-4">
+                        <h5><i class="fas fa-history me-2"></i>Recent Files</h5>
+                        <div class="recent-files-list" id="recentFiles">
+                            <!-- Recent files will be added here dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Player Section -->
+            <section id="player" class="feature-section">
+                <div class="player-container">
+                    <div class="waveform-container">
+                        <div id="waveform"></div>
+                        <div class="time-labels">
+                            <span id="currentTime">0:00</span>
+                            <span id="totalTime">0:00</span>
+                        </div>
+                    </div>
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="previousTrack()" title="Previous Track">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button class="control-btn play-btn" onclick="togglePlay()" title="Play/Pause">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" onclick="nextTrack()" title="Next Track">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                        <div class="volume-control">
+                            <i class="fas fa-volume-up"></i>
+                            <input type="range" id="volume" min="0" max="1" step="0.1" value="1" title="Volume Control">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Audio Info Section -->
+            <section id="info" class="feature-section active">
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-clock"></i>
+                            <h6>Duration</h6>
+                            <span id="audioDuration">0:00</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-wave-square"></i>
+                            <h6>Sample Rate</h6>
+                            <span id="sampleRate">0 Hz</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-volume-up"></i>
+                            <h6>Peak Volume</h6>
+                            <span id="peakVolume">0 dB</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-file-audio"></i>
+                            <h6>Format</h6>
+                            <span id="audioFormat">-</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-music"></i>
+                            <h6>Key</h6>
+                            <span id="audioKey">-</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-drum"></i>
+                            <h6>Tempo</h6>
+                            <span id="audioTempo">0 BPM</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-microphone-alt"></i>
+                            <h6>Channels</h6>
+                            <span id="audioChannels">-</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="mini-card">
+                            <i class="fas fa-file-waveform"></i>
+                            <h6>Bit Depth</h6>
+                            <span id="audioBitDepth">-</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Basic Controls Section -->
+            <section id="basic" class="feature-section">
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="action-card" onclick="normalizeAudio()">
+                            <i class="fas fa-balance-scale"></i>
+                            <h6>Normalize</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="action-card" onclick="fadeEffect('in')">
+                            <i class="fas fa-arrow-up"></i>
+                            <h6>Fade In</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="action-card" onclick="fadeEffect('out')">
+                            <i class="fas fa-arrow-down"></i>
+                            <h6>Fade Out</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="action-card" onclick="trimSilence()">
+                            <i class="fas fa-cut"></i>
+                            <h6>Trim Silence</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="speed" class="form-label">Speed</label>
+                        <input type="range" id="speed" class="form-range" min="0.5" max="2.0" step="0.1" value="1.0">
+                        <span id="speedValue">1.0x</span>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="pitch" class="form-label">Pitch</label>
+                        <input type="range" id="pitch" class="form-range" min="-12" max="12" step="1" value="0">
+                        <span id="pitchValue">0 semitones</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Effects Section -->
+            <section id="effects" class="feature-section">
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="preset-card" onclick="applyPreset('radio')">
+                            <i class="fas fa-radio"></i>
+                            <h6>Radio Effect</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="preset-card" onclick="applyPreset('telephone')">
+                            <i class="fas fa-phone"></i>
+                            <h6>Telephone</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6"></div>
+                        <div class="preset-card" onclick="applyPreset('cathedral')">
+                            <i class="fas fa-church"></i>
+                            <h6>Cathedral</h6>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="preset-card" onclick="applyPreset('underwater')">
+                            <i class="fas fa-water"></i>
+                            <h6>Underwater</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mt-4">
+                        <h6>Equalizer</h6>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="bass" class="form-label">Bass</label>
+                                <input type="range" id="bass" class="form-range" min="-12" max="12" step="1" value="0" title="Bass Level" aria-label="Bass Control">
+                                <span id="bassValue">0 dB</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="mid" class="form-label">Mid</label>
+                                <input type="range" id="mid" class="form-range" min="-12" max="12" step="1" value="0" title="Mid Level" aria-label="Mid Control">
+                                <span id="midValue">0 dB</span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="treble" class="form-label">Treble</label>
+                                <input type="range" id="treble" class="form-range" min="-12" max="12" step="1" value="0" title="Treble Level" aria-label="Treble Control">
+                                <span id="trebleValue">0 dB</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-info w-100 mt-3" onclick="applyEqualizer()">
+                            <i class="fas fa-sliders-h"></i> Apply EQ
+                        </button>
+                    </div>
+                    <div class="col-md-12 mt-4">
+                        <h6>Reverb</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="roomSize" class="form-label">Room Size</label>
+                                <input type="range" id="roomSize" class="form-range" min="0" max="1" step="0.1" value="0.5">
+                                <span id="roomSizeValue">0.5</span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="damping" class="form-label">Damping</label>
+                                <input type="range" id="damping" class="form-range" min="0" max="1" step="0.1" value="0.5">
+                                <span id="dampingValue">0.5</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-info w-100 mt-3" onclick="applyReverb()">
+                            <i class="fas fa-wave-square"></i> Apply Reverb
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI Processing Section -->
+            <section id="ai" class="feature-section">
+                <div class="ai-tools-grid">
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <i class="fas fa-brain"></i>
+                            <h5>Audio Analysis</h5>
+                        </div>
+                        <div class="ai-card-body">
+                            <button class="btn btn-primary w-100 mb-3" onclick="analyzeAudio()">
+                                <i class="fas fa-chart-line"></i> Analyze Audio
+                            </button>
+                            <div id="analysisResults" class="analysis-display">
+                                <div class="analysis-item">
+                                    <span class="label">Tempo:</span>
+                                    <span id="tempoValue" class="value">- BPM</span>
+                                </div>
+                                <div class="analysis-item">
+                                    <span class="label">Key:</span>
+                                    <span id="keyValue" class="value">-</span>
+                                </div>
+                                <div class="analysis-item">
+                                    <span class="label">Loudness:</span>
+                                    <span id="loudnessValue" class="value">- dB</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <i class="fas fa-magic"></i>
+                            <h5>Style Transfer</h5>
+                        </div>
+                        <div class="ai-card-body">
+                            <div class="style-grid">
+                                <div class="style-option" onclick="applyStyle('warm')">
+                                    <i class="fas fa-sun"></i>
+                                    <span>Warm</span>title="Main Volume">
+                                </div>
+                                <div class="style-option" onclick="applyStyle('bright')">
+                                    <i class="fas fa-lightbulb"></i>
+                                    <span>Bright</span>
+                                </div>
+                                <div class="style-option" onclick="applyStyle('vintage')">
+                                    <i class="fas fa-record-vinyl"></i>
+                                    <span>Vintage</span>title="Instrumental Volume">
+                                </div>
+                                <div class="style-option" onclick="applyStyle('modern')">
+                                    <i class="fas fa-wave-square"></i>
+                                    <span>Modern</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mixer Section -->
+            <section id="mixer" class="feature-section">
+                <div class="mixer-container">
+                    <div class="track-controls">
+                        <div class="volume-fader">
+                            <input type="range" class="fader" id="mainVolume" min="0" max="100" value="100" orient="vertical" title="Main Volume" aria-label="Main Volume Control">
+                            <label>Main</label>
+                        </div>
+                        <div class="volume-fader">
+                            <input type="range" class="fader" id="vocalVolume" min="0" max="100" value="100" orient="vertical" title="Vocals Volume" aria-label="Vocals Volume Control">
+                            <label>Vocals</label>
+                        </div>
+                        <div class="volume-fader">
+                            <input type="range" class="fader" id="instrumentalVolume" min="0" max="100" value="100" orient="vertical" title="Instrumental Volume" aria-label="Instrumental Volume Control">
+                            <label>Instrumental</label>
+                        </div>
+                    </div>
+                    <div class="color-effects">
+                        <div class="color-preset" data-color="warm">Warm</div>
+                        <div class="color-preset" data-color="cool">Cool</div>
+                        <div class="color-preset" data-color="vibrant">Vibrant</div>
+                        <div class="color-preset" data-color="mellow">Mellow</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Advanced Section -->
+            <section id="advanced" class="feature-section">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="feature-card"></div>
+                            <h5><i class="fas fa-wave-square"></i> Waveform</h5>
+                            <div id="waveform"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="feature-card">
+                            <h5><i class="fas fa-music"></i> Player</h5>
+                            <audio id="audioPlayer" controls class="w-100"></audio>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
