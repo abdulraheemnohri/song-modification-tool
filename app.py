@@ -504,6 +504,10 @@ def processed_file(filename):
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
+@app.route('/demo')
+def demo():
+    return send_from_directory(app.config['STATIC_FOLDER'], 'demo.html')
+
 if __name__ == '__main__':
     logger.info("Starting server...")
     logger.info(f"Upload folder: {UPLOAD_FOLDER}")

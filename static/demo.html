@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Song Modifier - Live Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .demo-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-demo {
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-demo:hover {
+            transform: translateY(-5px);
+        }
+
+        .live-waveform {
+            height: 200px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>🎵 AI Song Modifier</h1>
+            <p class="lead">Live Interactive Demo</p>
+        </div>
+
+        <div class="demo-features">
+            <div class="feature-demo">
+                <i class="fas fa-waveform fa-2x mb-3"></i>
+                <h5>Real-time Processing</h5>
+                <div class="mt-3">
+                    <button class="btn btn-primary btn-sm" onclick="showFeature('waveform')">Try Now</button>
+                </div>
+            </div>
+            <div class="feature-demo">
+                <i class="fas fa-sliders-h fa-2x mb-3"></i>
+                <h5>Audio Effects</h5>
+                <div class="mt-3">
+                    <button class="btn btn-primary btn-sm" onclick="showFeature('effects')">Try Now</button>
+                </div>
+            </div>
+            <div class="feature-demo">
+                <i class="fas fa-brain fa-2x mb-3"></i>
+                <h5>AI Analysis</h5>
+                <div class="mt-3">
+                    <button class="btn btn-primary btn-sm" onclick="showFeature('ai')">Try Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="live-waveform" id="demo-waveform"></div>
+
+        <div class="demo-controls">
+            <button class="btn btn-lg btn-primary" onclick="tryDemo()">
+                <i class="fas fa-play me-2"></i>Try Live Demo
+            </button>
+            <button class="btn btn-lg btn-outline-primary" onclick="window.location.href='/'">
+                <i class="fas fa-rocket me-2"></i>Launch Full Version
+            </button>
+        </div>
+
+        <div class="demo-features mt-4">
+            <div class="feature-demo">
+                <h6>Sample Audio 1</h6>
+                <button class="btn btn-sm btn-secondary" onclick="loadSample(1)">Load</button>
+            </div>
+            <div class="feature-demo">
+                <h6>Sample Audio 2</h6>
+                <button class="btn btn-sm btn-secondary" onclick="loadSample(2)">Load</button>
+            </div>
+            <div class="feature-demo">
+                <h6>Sample Audio 3</h6>
+                <button class="btn btn-sm btn-secondary" onclick="loadSample(3)">Load</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script>
+        let demoWavesurfer = WaveSurfer.create({
+            container: '#demo-waveform',
+            waveColor: '#4f46e5',
+            progressColor: '#818cf8',
+            cursorColor: '#818cf8',
+            barWidth: 2,
+            barRadius: 3,
+            cursorWidth: 1,
+            height: 200,
+            barGap: 3
+        });
+
+        function showFeature(feature) {
+            // Add demo feature showcase logic
+            switch(feature) {
+                case 'waveform':
+                    demoWavesurfer.load('/static/samples/demo1.mp3');
+                    break;
+                case 'effects':
+                    // Show effects demo
+                    break;
+                case 'ai':
+                    // Show AI analysis demo
+                    break;
+            }
+        }
+
+        function tryDemo() {
+            demoWavesurfer.playPause();
+        }
+
+        function loadSample(number) {
+            demoWavesurfer.load(`/static/samples/demo${number}.mp3`);
+        }
+
+        // Initialize with a demo sound
+        demoWavesurfer.load('/static/samples/demo1.mp3');
+    </script>
+</body>
+</html>
