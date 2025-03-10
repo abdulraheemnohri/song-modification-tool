@@ -1,0 +1,10 @@
+# These owners will be the default owners for everything in the repo
+*       @abdulraheemnohri
+
+# Backend code
+/app.py   @abdulraheemnohri
+/config.py @abdulraheemnohri
+
+# Frontend code
+/static/   @abdulraheemnohri
+/templates/ @abdulraheemnohri
