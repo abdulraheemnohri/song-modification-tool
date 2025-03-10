@@ -1,0 +1,9 @@
+title: AI Song Modification Tool
+description: Documentation for the AI Song Modification Tool
+theme: jekyll-theme-cayman
+show_downloads: true
+google_analytics: # Add your GA code here
+github:
+  zip_url: https://github.com/abdulraheemnohri/song-modification-tool/zipball/main
+  tar_url: https://github.com/abdulraheemnohri/song-modification-tool/tarball/main
+  repository_url: https://github.com/abdulraheemnohri/song-modification-tool

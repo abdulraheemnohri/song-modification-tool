@@ -3,6 +3,8 @@
 [![Python](https://img.shields.io/badge/python-v3.8+-blue.svg)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/flask-v2.0.0-green.svg)](https://flask.palletsprojects.com/)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Documentation](https://github.com/abdulraheemnohri/song-modification-tool/actions/workflows/pages.yml/badge.svg)](https://abdulraheemnohri.github.io/song-modification-tool)
+[![CodeQL](https://github.com/abdulraheemnohri/song-modification-tool/actions/workflows/codeql.yml/badge.svg)](https://github.com/abdulraheemnohri/song-modification-tool/security/code-scanning)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > A powerful web-based application for audio processing and manipulation using AI technology.
